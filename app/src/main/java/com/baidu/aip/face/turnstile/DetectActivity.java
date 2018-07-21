@@ -148,12 +148,12 @@ public class DetectActivity extends AppCompatActivity {
 
     private void setCameraType(CameraImageSource cameraImageSource) {
         // TODO 选择使用前置摄像头
-         cameraImageSource.getCameraControl().setCameraFacing(ICameraControl.CAMERA_FACING_FRONT);
+//         cameraImageSource.getCameraControl().setCameraFacing(ICameraControl.CAMERA_FACING_FRONT);
 
         // TODO 选择使用usb摄像头
-//        cameraImageSource.getCameraControl().setCameraFacing(ICameraControl.CAMERA_USB);
+        cameraImageSource.getCameraControl().setCameraFacing(ICameraControl.CAMERA_USB);
         // 如果不设置，人脸框会镜像，显示不准  //qb_20180512 注释此处，否则人脸框会镜像，显示不准。
-//        previewView.getTextureView().setScaleX(-1);
+        previewView.getTextureView().setScaleX(-1);
 
         // TODO 选择使用后置摄像头
 //      cameraImageSource.getCameraControl().setCameraFacing(ICameraControl.CAMERA_FACING_BACK);
@@ -183,8 +183,10 @@ public class DetectActivity extends AppCompatActivity {
     // 屏幕上显示用户信息。
     private void showUserInfo(FaceModel model) {
         if (model != null) {
+
             // 把userInfo和分数显示在屏幕上
-            String text = String.format(Locale.ENGLISH, "%s  %.2f\n%s", model.getUserInfo(), model.getScore(), model.getFaceliveness());
+            String text = String.format(Locale.ENGLISH, "%s  %.2f\n%s", model.getUserInfo(), model.getScore(),
+                    model.getFaceliveness() );
             nameTextView.setText(text);
         }
     }
@@ -212,8 +214,8 @@ public class DetectActivity extends AppCompatActivity {
                         if (result == null) {
                             return;
                         }
-                        // 识别分数小于80，也可能是角度不好。可以选择重试。
-                        if (result.getScore() < 80) {
+                        // 识别分数小于80，也可能是角度不好。可以选择重试。  //临时改成每次都传
+                        if (result.getScore() < 100) {
                             shouldUpload = true;
                         }
                         showUserInfo(result);
